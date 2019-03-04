@@ -10,11 +10,12 @@ import android.support.v4.widget.SwipeRefreshLayout
 import android.view.*
 import android.widget.*
 import com.quanghoa.apps.coroutinetodoapp.R
+import com.quanghoa.apps.coroutinetodoapp.addedittask.AddEditTaskActivity
 import com.quanghoa.apps.coroutinetodoapp.data.Task
+import com.quanghoa.apps.coroutinetodoapp.taskdetail.TaskDetailActivity
 import com.quanghoa.apps.coroutinetodoapp.util.showSnackBar
-import kotlinx.android.synthetic.main.tasks_frag.view.*
 
-class TasksFrgment : Fragment(), TasksContract.View {
+class TasksFragment : Fragment(), TasksContract.View {
 
     override lateinit var presenter: TasksContract.Presenter
 
@@ -28,7 +29,7 @@ class TasksFrgment : Fragment(), TasksContract.View {
     private lateinit var tasksView: LinearLayout
     private lateinit var filteringLabelView: TextView
 
-    internal var itemClick: TaskItemListener = object : TaskItemListener {
+    internal  var itemClick: TaskItemListener = object : TaskItemListener {
         override fun onTaskClick(clickedTask: Task) {
             presenter.openTaskDetails(clickedTask)
         }
@@ -125,11 +126,14 @@ class TasksFrgment : Fragment(), TasksContract.View {
     }
 
     override fun showAddTask() {
-        // TODO Later
+        val intent = Intent(context, AddEditTaskActivity::class.java)
+        startActivityForResult(intent, AddEditTaskActivity.REQUEST_ADD_TASK)
     }
 
     override fun showTaskDetailsUi(taskId: String) {
-        // TODO Later
+        val intent = Intent(requireContext(), TaskDetailActivity::class.java)
+        intent.putExtra(TaskDetailActivity.EXTRA_TASK_ID, taskId)
+        startActivity(intent)
     }
 
     override fun showTaskMarkedComplete() {
@@ -263,6 +267,6 @@ class TasksFrgment : Fragment(), TasksContract.View {
     }
 
     companion object {
-        fun newInstance() = TasksFrgment()
+        fun newInstance() = TasksFragment()
     }
 }

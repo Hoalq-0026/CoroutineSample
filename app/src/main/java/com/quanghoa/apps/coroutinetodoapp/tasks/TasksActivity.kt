@@ -1,5 +1,6 @@
 package com.quanghoa.apps.coroutinetodoapp.tasks
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.NavigationView
 import android.support.v4.view.GravityCompat
@@ -8,6 +9,7 @@ import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
 import com.quanghoa.apps.coroutinetodoapp.Injection
 import com.quanghoa.apps.coroutinetodoapp.R
+import com.quanghoa.apps.coroutinetodoapp.statistic.StatisticsActivity
 import com.quanghoa.apps.coroutinetodoapp.util.replaceFragmentInActivity
 import com.quanghoa.apps.coroutinetodoapp.util.setupActionBar
 
@@ -35,7 +37,7 @@ class TasksActivity : AppCompatActivity() {
         setupDrawerContent(findViewById<NavigationView>(R.id.nav_view))
 
         val tasksFragment = supportFragmentManager.findFragmentById(R.id.contentFrame)
-                as TasksFrgment? ?: TasksFrgment.newInstance().also {
+                as TasksFragment? ?: TasksFragment.newInstance().also {
             replaceFragmentInActivity(it, R.id.contentFrame)
         }
 
@@ -67,7 +69,8 @@ class TasksActivity : AppCompatActivity() {
     private fun setupDrawerContent(navigationView: NavigationView) {
         navigationView.setNavigationItemSelectedListener { menuItem ->
             if (menuItem.itemId == R.id.statistic_navigation_menu_item) {
-                // Todo later
+                val intent = Intent(this@TasksActivity, StatisticsActivity::class.java)
+                startActivity(intent)
             }
 
             menuItem.isChecked = true

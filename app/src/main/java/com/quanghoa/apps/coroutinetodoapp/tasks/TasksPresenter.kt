@@ -1,5 +1,7 @@
 package com.quanghoa.apps.coroutinetodoapp.tasks
 
+import android.app.Activity
+import com.quanghoa.apps.coroutinetodoapp.addedittask.AddEditTaskActivity
 import com.quanghoa.apps.coroutinetodoapp.data.Task
 import com.quanghoa.apps.coroutinetodoapp.data.source.Result
 import com.quanghoa.apps.coroutinetodoapp.data.source.TasksRepository
@@ -27,7 +29,9 @@ class TasksPresenter(private val tasksRepository: TasksRepository,
 
     override fun result(requestCode: Int, resultCode: Int) {
         // If a task was successfully added, show snackbar
-        // TODO later
+        if (AddEditTaskActivity.REQUEST_ADD_TASK == requestCode && resultCode == Activity.RESULT_OK) {
+            tasksView.showSuccessullySavedMessage()
+        }
     }
 
     override fun loadTasks(forceUpdate: Boolean) {
